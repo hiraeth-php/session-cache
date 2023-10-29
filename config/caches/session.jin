@@ -1,0 +1,29 @@
+[cache]
+
+	;
+	; Whether or not this cache is disabled
+	;
+
+	disabled = false
+
+	;
+	; The driver to use
+	;
+	; By default this package recommends sqlite driver for lower dependencies, however if you're
+	; in a more complex multi-node environment or need more performant solutions, memcache is
+	; probably the way to go.  You can also try to add nesting = 1 to the options below.
+	;
+
+	class = Symfony\Component\Cache\Adapter\FilesystemAdapter
+
+	;
+	; Driver Options
+	;
+
+	[&.options]
+
+		;
+		;
+		;
+
+		directory = dir(storage/sessions)

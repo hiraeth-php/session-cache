@@ -1,0 +1,38 @@
+{
+    "name": "hiraeth/session-cache",
+    "description": "Cache based session storage for the Hiraeth Nano Framework",
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "license": "MIT",
+    "authors": [
+        {
+            "name":  "Matthew J. Sahagian",
+            "email": "matthew.sahagian@gmail.com",
+            "role":  "Lead Architect / Developer"
+        }
+    ],
+    "autoload": {
+        "classmap": ["src/"]
+    },
+    "require": {
+        "ext-pdo_sqlite": "*",
+        "hiraeth/cache": "^3.0"
+    },
+    "require-dev": {
+        "phpstan/phpstan": "^1.0",
+        "phpunit/phpunit": "^10.0"
+    },
+    "type": "opus-package",
+    "extra": {
+        "opus": {
+            "hiraeth/app": {
+                "config": ""
+            }
+        }
+    },
+    "config": {
+        "allow-plugins": {
+            "imarc/opus": true
+        }
+    }
+}
