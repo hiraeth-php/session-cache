@@ -2,9 +2,10 @@
 
 namespace Hiraeth\Stash\Session;
 
+use DateTime;
 use SessionHandlerInterface;
 use Psr\Cache\CacheItemPoolInterface;
-use Stash\Pool;
+use Psr\Cache\CacheItemInterface;
 
 /**
  *
@@ -17,10 +18,9 @@ use Stash\Pool;
 class Handler implements SessionHandlerInterface
 {
 	/**
-	 * @var Pool
+	 * @var CacheItemPoolInterface
 	 */
 	private $cache;
-
 
 	/**
 	 * @var int Time to live in seconds
@@ -29,14 +29,7 @@ class Handler implements SessionHandlerInterface
 
 
 	/**
-	 * @var string Key prefix for shared environments.
-	 */
-	private $prefix;
-
-
-	/**
-	 * @param Pool $cache
-	 * @param array<string, mixed> $options An array of options including 'ttl' and 'prefix
+	 *
 	 */
 	public function __construct(CacheItemPoolInterface $cache, int $ttl)
 	{
@@ -106,20 +99,29 @@ class Handler implements SessionHandlerInterface
 	 */
 	public function gc($lifetime): int
 	{
-		$this->cache->purge();
+		$count = 0;
 
-		//
-		// There is currently no way to get the number of deleted items which newer gc should
-		// return.  That said, we're not solidly worried about performance, so we'll just send
-		// a random number.  Improvements in stash would be good.
-		//
+		foreach ($this->cache->getItems() as $key => $item) {
+			if (!$item->isHit()) {
+				continue;
+			}
 
-		return rand(0, 100);
+			if (!$item->getExpiration()) {
+				continue;
+			}
+
+			if ($item->getExpiration() <= new DateTime()) {
+				$this->cache->deleteItem($key);
+				$count++;
+			}
+		}
+
+		return $count;
 	}
 
 
 	/**
-	 * @return \Psr\Cache\CacheItemInterface
+	 * @return CacheItemInterface
 	 */
 	private function getCacheItem(string $id)
 	{
