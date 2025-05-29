@@ -42,7 +42,14 @@ class HandlerDelegate implements Hiraeth\Delegate
 	public function __invoke(Hiraeth\Application $app): object
 	{
 		$pool = $this->manager->get('session');
-		$ttl  = $app->getEnvironment('SESSION_TTL', ini_get('session.gc_maxlifetime'));
+
+		if (!$ttl = $app->getEnvironment('SESSION_TTL', ini_get('session.gc_maxlifetime'))) {
+			//
+			// Check if we're using browser based session
+			//
+
+			$ttl = $app->getEnvironment('SESSION_GCL', ini_get('session.gc_maxlifetime'));
+		}
 
 		return new Handler($pool, $ttl);
 	}
