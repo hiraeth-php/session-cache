@@ -81,9 +81,6 @@ class Handler implements SessionHandlerInterface
 
 		$result = $this->cache->save($item);
 
-		var_dump($result, $this->cache); exit();
-
-
 		return $this->cache->save($item);
 	}
 
