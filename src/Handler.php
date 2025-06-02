@@ -79,8 +79,6 @@ class Handler implements SessionHandlerInterface
 
 		$item->set($data)->expiresAfter($this->ttl);
 
-		$result = $this->cache->save($item);
-
 		return $this->cache->save($item);
 	}
 
