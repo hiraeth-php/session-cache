@@ -1,11 +1,9 @@
 <?php
 
-namespace Hiraeth\Stash\Session;
+namespace Hiraeth\Session;
 
 use Hiraeth;
 use Hiraeth\Caching;
-use Psr\Cache\CacheItemPoolInterface;
-use RuntimeException;
 
 /**
  *

@@ -1,6 +1,6 @@
 <?php
 
-namespace Hiraeth\Stash\Session;
+namespace Hiraeth\Session;
 
 use DateTime;
 use SessionHandlerInterface;
@@ -78,6 +78,11 @@ class Handler implements SessionHandlerInterface
 		$item = $this->getCacheItem($id);
 
 		$item->set($data)->expiresAfter($this->ttl);
+
+		$result = $this->cache->save($item);
+
+		var_dump($result, $this->cache); exit();
+
 
 		return $this->cache->save($item);
 	}

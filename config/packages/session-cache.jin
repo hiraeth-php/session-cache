@@ -7,7 +7,7 @@
 	;
 
 	aliases = {
-		"SessionHandlerInterface": "Hiraeth\Stash\Session\Handler"
+		"SessionHandlerInterface": "Hiraeth\Session\Handler"
 	}
 
 	;
@@ -18,7 +18,7 @@
 	;
 
 	delegates = [
-		"Hiraeth\Stash\Session\HandlerDelegate"
+		"Hiraeth\Session\HandlerDelegate"
 	]
 
 	;
